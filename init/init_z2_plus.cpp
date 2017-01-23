@@ -81,11 +81,42 @@ void init_alarm_boot_properties()
      * 7 -> CBLPWR_N pin toggled (for external power supply)
      * 8 -> KPDPWR_N pin toggled (power key pressed)
      */
-        if(buf[0] == '3')
-            property_set("ro.alarm_boot", "true");
-        else
-            property_set("ro.alarm_boot", "false");
+    if(buf[0] == '3')
+        property_set("ro.alarm_boot", "true");
+    else
+        property_set("ro.alarm_boot", "false");
     }
+}
+
+void init_charger_boot_properties()
+{
+    char bootmode[PROP_VALUE_MAX];
+    int rt;
+    int fd = -1;
+
+
+    rt = property_get("ro.bootmode", bootmode, NULL);
+    if ( !strncmp(bootmode, "usb_chg", PROP_VALUE_MAX) || !strncmp(bootmode, "usb_cable", PROP_VALUE_MAX)) {
+        property_set("ro.bootmode", "charger");
+        property_set("ro.bootmodes", "charger");
+        //BOARD_CHARGING_MODE_BOOTING_LPM := "/sys/class/power_supply/battery/charging_mode_booting"
+        //  /sys/mmi_lpm/lpm_mode   //cache/charger_mode
+    //mkdir("/sys/mmi_lpm", S_IRWXU | S_IRWXG | S_IRWXO);
+    fd = open("/data/local/tmp/charger_mode", O_RDWR | O_CREAT | O_CLOEXEC, 0777);
+
+    if (fd >= 0) {
+        const char *msg;
+        msg = "1\n";
+        write(fd, msg, strlen(msg));
+        property_set("ro.bootmodesfd", "charger");
+        close(fd);
+    chmod("/data/local/tmp/charger_mode", 0777);
+    }
+
+    }
+
+    
+
 }
 
 void vendor_load_properties() {
@@ -97,8 +128,9 @@ void vendor_load_properties() {
     if (!rc || strncmp(device, "z2", PROP_VALUE_MAX))
         return;
 
-        property_set("ro.product.model", "Z2 Plus");
+    property_set("ro.product.model", "ZUK Z2");
 
+    //init_charger_boot_properties();
     init_alarm_boot_properties();
 }
 

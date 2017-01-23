@@ -65,7 +65,9 @@ ro.sf.lcd_density=480
 sdm.perf_hint_window=50
 persist.hwc.enable_vds=1
 sdm.debug.disable_rotator_split=1
-persist.panel.mountflip=3
+persist.panel.inversemounted=1
+ro.panel.mountflip=3
+#persist.panel.mountflip=3
 
 # Perf
 ro.am.reschedule_service=true
@@ -131,7 +133,7 @@ persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
 
 # dpm
-persist.dpm.feature=3
+ro.dpm.feature=3
 
 # System property for cabl
 ro.qualcomm.cabl=2
@@ -158,4 +160,4 @@ ro.roaming.vendor=redtea
 ro.sys.sdcardfs=true
 
 persist.sys.ssr.enable_ramdumps=0
-ro.mk.maintainer=Flour_Mo
+

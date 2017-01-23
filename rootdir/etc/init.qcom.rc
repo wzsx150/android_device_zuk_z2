@@ -37,6 +37,7 @@ on early-init
 
 on init
 
+
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
@@ -63,11 +64,15 @@ on early-boot
     write /sys/kernel/boot_adsp/boot 1
     write /sys/kernel/boot_slpi/boot 1
 
+
+
 on fs
     wait /dev/block/bootdevice
     mount_all fstab.qcom
 
 on boot
+
+
 
     # Secure touch
     chmod 0660 /sys/devices/soc/75ba000.i2c/i2c-12/12-004a/secure_touch_enable

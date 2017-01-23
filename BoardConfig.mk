@@ -21,7 +21,7 @@
 #
 
 
-TARGET_OTA_ASSERT_DEVICE := z2,Z2,z2plus,z2_plus
+TARGET_OTA_ASSERT_DEVICE := z2,Z2,z2plus,z2_plus,z2131,Z2131
 
 PLATFORM_PATH := device/zuk/z2
 
@@ -112,9 +112,10 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_SHOW_PERCENTAGE := true
 
 # CM Hardware
-BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/mkhw
+BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/cmhw
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/touch/tp_dev/gesture_on"
 
 # CNE and DPM
@@ -138,6 +139,7 @@ MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 6000000
+#BOARD_HAS_FLIPPED_SCREEN := true
 
 # Enable dexpreopt to speed boot time
 ifeq ($(HOST_OS),linux)
@@ -216,6 +218,9 @@ WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WIFI_DRIVER_MODULE_NAME := "wlan"
 WIFI_DRIVER_MODULE_PATH := "/system/lib/modules/wlan.ko"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+# Jack-server
+ANDROID_JACK_VM_ARGS :=  -Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m
 
 # inherit from the proprietary version
 -include vendor/zuk/z2/BoardConfigVendor.mk
